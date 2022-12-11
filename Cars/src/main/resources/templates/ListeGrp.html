@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="navbar" xmlns:sec=https://www.thymeleaf.org/thymeleaf-extras-springsecurity5
+>
+<link rel="stylesheet" type="text/css" href="webjars/bootstrap/4.0.0/css/bootstrap.min.css" />
+<head>
+<meta charset="utf-8">
+<title>Liste des Groupes</title>
+ <style>
+ html,body{
+	background:#DBDFFD;
+}
+ </style>
+<link rel="icon" type="image/x-icon" href="../images/icon.png">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div layout:fragment="Mynavbar">
+    <div class="container mt-5">
+    <div class="card" style='border:1px solid black;border-radius:10px;'>
+     <div class="card-header">
+        <center><h1 style='font-weight: bold;color:#001D6E;'>Liste des Groupes</h1></center>
+     </div>
+     <div class="card-body"> 
+      <form class="search-box" name="searchForm" method="GET">
+                    </aside>
+                    <div class="form-group"> 
+                    <input type="search" id="myInput" class="form-control" placeholder="Chercher" style='border:1px solid #7F8487;border-radius:5px;' /><i class="fa fa-search" aria-hidden="true"></i>
+                    </div>
+                    </aside>
+                </form>
+                <br>
+     <table id="myTable" class="table table-striped" style="text-align: center;">
+     <tr>
+     <th>ID</th><th>Nom Groupe</th><th>Description Groupe</th><th colspan="2">Actions</th>
+     </tr> 
+     <tr th:each="g:${groupes}">
+     <td th:text="${g.idGrp}"></td>
+     <td th:text="${g.nomGrp}"></td>
+        <td th:text="${g.descriptionGrp}"></td>
+     <td><a class="btn btn-danger" onclick="return confirm('Etes-vous sur ?')" th:href="@{supprimerGroupe(id=${g.idGrp})}">Supprimer</a></td>
+   <td><a class="btn btn-success" th:href="@{modifierGroupe(id=${g.idGrp})}">Editer</a></td>
+     </tr> 
+     </table>
+     
+     </div>
+    </div>
+    </div>
+    </div>
+    </body>
+</html>

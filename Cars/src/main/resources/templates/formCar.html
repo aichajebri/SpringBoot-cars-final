@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="navbar">
+<link rel="stylesheet" type="text/css"
+href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<head>
+<meta charset="utf-8">
+<title>Ajout et modification des Cars</title>
+<link rel="icon" type="image/x-icon" href="../images/icon.png">
+ <style>
+ html,body{
+	background:#DBDFFD;
+}
+ </style>
+</head>
+<body>
+<div layout:fragment="Mynavbar">
+<div class="container mt-5">
+<div class="card" style='border:1px solid black;border-radius:10px;'>
+<div class="card-header" th:if="${mode=='new'}"> <center><h1 style='font-weight: bold;color:#001D6E;'>Ajout des Cars</h1></center> </div>
+ <div class="card-header" th:if="${mode=='edit'}"><center><h1 style='font-weight: bold;color:#001D6E;'>Modification des Cars</h1></center></div>
+<div class="card-body">
+ <form th:action="@{saveCar}" method="post">
+ <div class="form-group">
+<label class="control-label" hidden>ID Car :</label>
+<input type="hidden" name="idCar" class="form-control"
+th:value="${car.idCar}" />
+ </div>
+
+<div class="form-group">
+ <label class="control-label">Nom Car :</label>
+ <input type="text" name="nomCar" class="form-control" th:value="${car.nomCar}" />
+<span th:errors= ${car.nomCar} class="text-danger"> </span>
+</div>
+
+<div class="form-group">
+<label class="control-label">Date Ajout :</label>
+<input type="date" name="dateAjout" class="form-control" th:value="${car.dateAjout}"/>
+<span th:errors=${car.dateAjout} class="text-danger"> </span>
+</div>
+<div th:if="${mode!='edit'}">
+<div class="form-group"> 
+<label class="control-label">Groupe :</label>
+ <select name="groupe" class="form-control" required>
+ <option th:each="c : ${groupes}" th:value="${c.idGrp}" th:text="${c.nomGrp}"></option>
+ </select>
+</div>
+</div>
+<div th:if="${mode=='edit'}">
+<div class="form-group"> 
+<label class="control-label">Groupe :</label>
+ <select name="groupe" class="form-control" required>
+  <option th:value="${car.groupe.idGrp}" th:text="${car.groupe.nomGrp}" selected></option>
+ <option th:each="c : ${groupes}" th:value="${c.idGrp}" th:text="${c.nomGrp}"></option>
+ </select>
+</div>
+</div>
+ <div style="text-align:center;margin-top:20px;">
+  <a th:href="@{ListeCars}" ><button type="button" class="btn btn-secondary">Annuler</button></a>
+ <button type="submit" class="btn btn-primary">Valider</button>
+ </div>
+ </div>
+</form>
+</div>
+ </div>
+ </div>
+ </div>
+</body>
+</html>
